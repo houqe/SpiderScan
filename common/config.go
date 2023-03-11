@@ -18,4 +18,5 @@ type Args struct {
 var (
 	Threads int
 	Timeout int
+	Ping    bool
 )

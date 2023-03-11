@@ -7,6 +7,6 @@ import (
 
 func PortScan(hosts []string, ports string) []string {
 	portList := common.ParsePort(ports)
-	fmt.Println(common.Yellow("[*] 端口测绘"), portList)
+	fmt.Println("[*] 端口测绘", portList)
 	return nil
 }

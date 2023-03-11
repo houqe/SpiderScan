@@ -6,12 +6,20 @@ import (
 )
 
 func Scan(args common.Args) {
-	fmt.Println(common.Green("[*] start scan..."))
+	fmt.Println("[*] start scan...")
 	hosts, err := common.ParseIP(args.Host)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(common.Yellow("[*] 主机测绘"), hosts)
+	if len(hosts) > 3 {
+		fmt.Println("[*] 主机测绘", hosts[0], hosts[1], hosts[2], "...")
+	} else {
+		fmt.Println("[*] 主机测绘", hosts)
+	}
 	PortScan(hosts, args.Ports)
+	if common.Ping && len(hosts) > 0 {
+		//println("进行主机探活")
+		CheckLive(hosts, common.Ping)
+	}
 }
