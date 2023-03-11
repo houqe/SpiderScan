@@ -9,13 +9,14 @@ import (
 )
 
 func ParseIP(host string) (hosts []string, err error) {
-	hosts = ParseIPs(host)
+	hosts = removeDuplicateIP(ParseIPs(host))
 	if len(hosts) == 0 && host != "" {
-		err = errors.New("[!] 主机解析失败，请检查支持的IP格式")
+		err = errors.New("[!] 主机解析失败，请检查IP格式")
 	}
 	return
 }
 
+// 解析 ip,ip 格式
 func ParseIPs(ip string) (hosts []string) {
 	if strings.Contains(ip, ",") {
 		ipList := strings.Split(ip, ",")
@@ -25,10 +26,10 @@ func ParseIPs(ip string) (hosts []string) {
 	} else {
 		hosts = parseIP(ip)
 	}
-
 	return
 }
 
+// 分类处理ip
 func parseIP(ip string) []string {
 	switch {
 	case strings.Contains(ip, "/"):
@@ -115,4 +116,16 @@ func IPRange(c *net.IPNet) string {
 	}
 	end := bcst.String()
 	return fmt.Sprintf("%s-%s", start, end) //返回用-表示的ip段,192.168.1.0-192.168.255.255
+}
+
+func removeDuplicateIP(old []string) []string {
+	result := []string{}
+	temp := map[string]struct{}{}
+	for _, item := range old {
+		if _, ok := temp[item]; !ok {
+			temp[item] = struct{}{}
+			result = append(result, item)
+		}
+	}
+	return result
 }

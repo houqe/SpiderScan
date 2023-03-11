@@ -13,5 +13,5 @@ func main() {
 	common.Flag(&args)
 	core.Scan(args)
 	t := time.Now().Sub(start)
-	fmt.Printf("[*] 扫描结束,耗时: %s\n", t)
+	fmt.Printf(common.Green("[*] 扫描结束,耗时: %s\n"), t)
 }
