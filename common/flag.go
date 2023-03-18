@@ -3,6 +3,7 @@ package common
 import (
 	"flag"
 	"fmt"
+	"github.com/fatih/color"
 )
 
 func Banner() {
@@ -14,7 +15,7 @@ func Banner() {
 	\____\\_/  \|\____/\____|_/ \|\_/  \|
 		EnScan version: ` + version + `
 `
-	fmt.Println(banner)
+	fmt.Println(color.BlueString(banner))
 }
 
 func Flag(args *Args) {

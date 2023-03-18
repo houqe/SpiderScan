@@ -18,7 +18,7 @@ func Scan(args common.Args) {
 		fmt.Println("[*] 主机测绘", hosts)
 	}
 	PortScan(hosts, args.Ports)
-	if common.Ping && len(hosts) > 0 {
+	if common.Ping || len(hosts) > 0 {
 		//println("进行主机探活")
 		CheckLive(hosts, common.Ping)
 	}
