@@ -3,6 +3,7 @@ package core
 import (
 	"EnScan/common"
 	"fmt"
+	"github.com/fatih/color"
 	"strconv"
 	"sync"
 	"time"
@@ -61,6 +62,7 @@ func PortConnect(addr Addr, results chan string, timout int, wg *sync.WaitGroup)
 	if err == nil {
 		address := host + ":" + strconv.Itoa(port)
 		result := fmt.Sprintf("%s open", address)
+		fmt.Printf(color.GreenString("[+] %s\n"), result)
 		wg.Add(1)
 		results <- result
 	}

@@ -3,7 +3,6 @@ package core
 import (
 	"EnScan/common"
 	"fmt"
-	"github.com/fatih/color"
 )
 
 func Scan(args common.Args) {
@@ -32,9 +31,10 @@ func Scan(args common.Args) {
 			}
 		}
 		AliveAddress := PortScan(hostsList, args.Ports, common.Timeout, common.Threads)
-		for _, addr := range AliveAddress {
-			fmt.Printf(color.GreenString("[+] %s\n"), addr)
-		}
+		fmt.Printf("[*] Port Open number %d\n", len(AliveAddress))
+		//for _, addr := range AliveAddress {
+		//	fmt.Printf(color.GreenString("[+] %s\n"), addr)
+		//}
 	}
 
 }
