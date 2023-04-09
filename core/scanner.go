@@ -3,23 +3,38 @@ package core
 import (
 	"EnScan/common"
 	"fmt"
+	"github.com/fatih/color"
 )
 
 func Scan(args common.Args) {
 	fmt.Println("[*] start scan...")
-	hosts, err := common.ParseIP(args.Host)
+	hostsList, err := common.ParseIP(args.Host)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	if len(hosts) > 3 {
-		fmt.Println("[*] 主机测绘", hosts[0], hosts[1], hosts[2], "...")
+	if len(hostsList) > 3 {
+		fmt.Println("[*] 主机测绘", hostsList[0], hostsList[1], hostsList[2], "...")
 	} else {
-		fmt.Println("[*] 主机测绘", hosts)
+		fmt.Println("[*] 主机测绘", hostsList)
 	}
-	PortScan(hosts, args.Ports)
-	if common.Ping || len(hosts) > 0 {
-		//println("进行主机探活")
-		CheckLive(hosts, common.Ping)
+	if len(hostsList) > 0 {
+		CheckLive(hostsList, common.Ping)
 	}
+
+	if !common.NotPort && len(hostsList) > 0 {
+		if args.Ports == "" {
+			if common.DftPorts {
+				args.Ports = common.DefaultPorts
+			}
+			if common.WPorts {
+				args.Ports = common.WebPorts
+			}
+		}
+		AliveAddress := PortScan(hostsList, args.Ports, common.Timeout, common.Threads)
+		for _, addr := range AliveAddress {
+			fmt.Printf(color.GreenString("[+] %s\n"), addr)
+		}
+	}
+
 }
