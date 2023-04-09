@@ -17,11 +17,12 @@ func Scan(args common.Args) {
 	} else {
 		fmt.Println("[*] 主机测绘", hostsList)
 	}
+	var AliveHosts []string
 	if len(hostsList) > 0 {
-		CheckLive(hostsList, common.Ping)
+		AliveHosts = CheckLive(hostsList, common.Ping)
 	}
 
-	if args.Ports != "" || common.DftPorts || common.WPorts && len(hostsList) > 0 {
+	if args.Ports != "" || common.DftPorts || common.WPorts && len(AliveHosts) > 0 {
 		if args.Ports == "" {
 			if common.DftPorts {
 				args.Ports = common.DefaultPorts
@@ -30,8 +31,8 @@ func Scan(args common.Args) {
 				args.Ports = common.WebPorts
 			}
 		}
-		AliveAddress := PortScan(hostsList, args.Ports, common.Timeout, common.Threads)
-		fmt.Printf("[*] Port Open number %d\n", len(AliveAddress))
+		AliveAddress := PortScan(AliveHosts, args.Ports, common.Timeout, common.Threads)
+		fmt.Printf("[*] Port open number %d\n", len(AliveAddress))
 		//for _, addr := range AliveAddress {
 		//	fmt.Printf(color.GreenString("[+] %s\n"), addr)
 		//}

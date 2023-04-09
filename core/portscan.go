@@ -16,6 +16,7 @@ type Addr struct {
 
 func PortScan(hostsList []string, ports string, timout int, threads int) []string {
 	var AliveAddress []string
+	//println(len(hostsList))
 	portsList := common.ParsePort(ports)
 	fmt.Println("[*] 端口测绘", portsList)
 	Addrs := make(chan Addr, len(hostsList)*len(portsList))
