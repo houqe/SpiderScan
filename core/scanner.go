@@ -21,7 +21,7 @@ func Scan(args common.Args) {
 		CheckLive(hostsList, common.Ping)
 	}
 
-	if !common.NotPort && len(hostsList) > 0 {
+	if args.Ports != "" || common.DftPorts || common.WPorts && len(hostsList) > 0 {
 		if args.Ports == "" {
 			if common.DftPorts {
 				args.Ports = common.DefaultPorts

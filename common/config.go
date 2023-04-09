@@ -16,10 +16,10 @@ type Args struct {
 
 // 相关全局参数
 var (
-	Threads     int
-	Timeout     int
-	Ping        bool
-	NotPort     bool
+	Threads int
+	Timeout int
+	Ping    bool
+	//NotPort     bool
 	DftPorts    bool
 	WPorts      bool
 	Socks5Proxy string
