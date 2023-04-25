@@ -29,7 +29,7 @@ Go语言小白，本项目主要用来学习Go语言编程思想。
 不提供端口信息，默认只进行主机探活
 
 ```python
-E:\GoWork\EnScan>go run .\main.go -h
+E:\GoWork\EnScan>go run main.go -h
 
                     へ　　　　　／|
                 　　/＼7　　　 ∠＿/
@@ -44,7 +44,7 @@ E:\GoWork\EnScan>go run .\main.go -h
 
                 　v1.0.0 by @KeyboardArtist
 flag needs an argument: -h
-Usage of go-build2440461614\b001\exe\main.exe:
+go-build3971156432\b001\exe\main.exe:
   -dp
         DefaultPorts: 21,22,80,81,135,139,443,445,1433,1521,3306,5432,6379,7001,8000,8080,8089,9000,9200,11211,27017
   -h string
@@ -54,7 +54,7 @@ Usage of go-build2440461614\b001\exe\main.exe:
   -p string
         Select a port,for example: 22 | 1-65535 | 22,80,3306
   -ping
-        using ping replace icmp
+        Using ping replace icmp
   -t int
         Use Thread nums (default 64)
   -time int

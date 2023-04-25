@@ -20,7 +20,7 @@ func PortScan(hostsList []string, ports string, timout int, threads int) []strin
 	portsList := common.ParsePort(ports)
 	fmt.Println("[*] 端口测绘", portsList)
 	if common.Log {
-		log.Info(fmt.Sprintf("[*] 端口测绘: %s", portsList))
+		log.Info(fmt.Sprintf("[*] 端口测绘: %d", portsList))
 	}
 	Addrs := make(chan Addr, len(hostsList)*len(portsList))
 	results := make(chan string, len(hostsList)*len(portsList))
