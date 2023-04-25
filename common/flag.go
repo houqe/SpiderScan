@@ -3,18 +3,17 @@ package common
 import (
 	"flag"
 	"fmt"
-	"github.com/fatih/color"
 )
 
 func Banner() {
-	//	banner := `
-	//	 _____ _      ____  ____ ____  _
-	//	/  __// \  /|/ ___\/   _Y  _ \/ \  /|
-	//	|  \  | |\ |||    \|  / | / \|| |\ ||
-	//	|  /_ | | \||\___ ||  \_| |-||| | \||
-	//	\____\\_/  \|\____/\____|_/ \|\_/  \|
-	//		EnScan version: ` + version + `
-	//`
+	banner := `
+		 _____ _      ____  ____ ____  _
+		/  __// \  /|/ ___\/   _Y  _ \/ \  /|
+		|  \  | |\ |||    \|  / | / \|| |\ ||
+		|  /_ | | \||\___ ||  \_| |-||| | \||
+		\____\\_/  \|\____/\____|_/ \|\_/  \|
+			v` + version + ` by @KeyboardArtist
+	`
 	//	banner := `
 	//		/＼7　　　 ∠＿/
 	//		/　│　　 ／　／
@@ -31,20 +30,20 @@ func Banner() {
 	//		v` + version + `@KeyboardArtist
 	//`
 
-	banner := `
-		    へ　　　　　／|
-		　　/＼7　　　 ∠＿/
-		　 /　│　　 ／　／    / 、
-		　│　Z ＿,＜　／　　 /　　〉
-		　 、　　　　　、　 /　 /
-		　ｲ●　､　●　　⊂⊃〈　　/
-		　()　 へ　　　　|　＼〈
-		　　>ｰ ､_　 ィ　 │ ／／
-		　 / へ　　 /　ﾉ＜| ＼＼
-		　 ヽ_ﾉ　　(_／　 │／／
-`
+	//	banner := `
+	//		    へ　　　　　／|
+	//		　　/＼7　　　 ∠＿/
+	//		　 /　│　　 ／　／    / 、
+	//		　│　Z ＿,＜　／　　 /　　〉
+	//		　 、　　　　　、　 /　 /
+	//		　ｲ●　､　●　　⊂⊃〈　　/
+	//		　()　 へ　　　　|　＼〈
+	//		　　>ｰ ､_　 ィ　 │ ／／
+	//		　 / へ　　 /　ﾉ＜| ＼＼
+	//		　 ヽ_ﾉ　　(_／　 │／／
+	//`
+	//fmt.Println(color.YellowString("\t\t　v" + version + " by @KeyboardArtist"))
 	fmt.Println(banner)
-	fmt.Println(color.YellowString("\t\t　v" + version + " by @KeyboardArtist"))
 }
 
 func Flag(args *Args) {
