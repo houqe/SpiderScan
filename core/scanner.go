@@ -9,8 +9,11 @@ func Scan(args common.Args) {
 	fmt.Println("[*] start scan...")
 	hostsList, err := common.ParseIP(args.Host)
 	if err != nil {
-		fmt.Println(err)
+		log.Warn(err.Error())
 		return
+	}
+	if common.Log {
+		log.Info(fmt.Sprintf("[*] 主机测绘: %s", hostsList))
 	}
 	if len(hostsList) > 3 {
 		fmt.Println("[*] 主机测绘", hostsList[0], hostsList[1], hostsList[2], "...")
@@ -32,6 +35,9 @@ func Scan(args common.Args) {
 			}
 		}
 		AliveAddress := PortScan(AliveHosts, args.Ports, common.Timeout, common.Threads)
+		if common.Log {
+			log.Info(fmt.Sprintf("[*] 端口探活完成，存活数量：%d", len(AliveAddress)))
+		}
 		fmt.Printf("[*] Port open number %d\n", len(AliveAddress))
 		//for _, addr := range AliveAddress {
 		//	fmt.Printf(color.GreenString("[+] %s\n"), addr)

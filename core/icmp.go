@@ -44,9 +44,15 @@ func CheckLive(hostsList []string, ping bool) []string {
 		//优先尝试监听本地icmp,批量探测
 		conn, err := icmp.ListenPacket("ip4:icmp", "0.0.0.0")
 		if err == nil {
+			if common.Log {
+				log.Info("[*] 本地监听ICMP探测")
+			}
 			RunIcmp1(hostsList, conn, chanHosts)
 		} else {
 			//无监听icmp探测
+			if common.Log {
+				log.Info("[*] 本地监听ICMP探测不可用,使用无监听探测方式")
+			}
 			conn, err := net.DialTimeout("ip4:icmp", "127.0.0.1", 3*time.Second)
 			defer func() {
 				if conn != nil {
@@ -57,6 +63,9 @@ func CheckLive(hostsList []string, ping bool) []string {
 				RunIcmp2(hostsList, chanHosts)
 			} else {
 				//使用ping探测
+				if common.Log {
+					log.Info("[*] 本地监听ICMP探测不可用,无监听探测方式不可用,使用PING探测")
+				}
 				fmt.Println(color.YellowString("Failed to send ICMP packet"))
 				fmt.Println("start ping")
 				RunPing(hostsList, chanHosts)
@@ -66,6 +75,9 @@ func CheckLive(hostsList []string, ping bool) []string {
 	livewg.Wait()
 	close(chanHosts)
 	fmt.Printf("[*] Host alive number %d\n", len(AliveHosts))
+	if common.Log {
+		log.Info(fmt.Sprintf("[*] 主机探活完成，存活数量：%d", len(AliveHosts)))
+	}
 	return AliveHosts
 }
 
@@ -150,9 +162,15 @@ func ExecCommandPing(ip string) bool {
 	command.Stdout = &outInfo
 	err := command.Start()
 	if err != nil {
+		if common.Log {
+			log.Error("[-] COMMAND 启动失败！")
+		}
 		return false
 	}
 	if err = command.Wait(); err != nil {
+		if common.Log {
+			log.Error("[-] PING 命令执行失败！")
+		}
 		return false
 	} else {
 		if strings.Contains(outInfo.String(), "true") {

@@ -19,6 +19,7 @@ var (
 	Threads int
 	Timeout int
 	Ping    bool
+	Log     bool
 	//NotPort     bool
 	DftPorts    bool
 	WPorts      bool

@@ -19,6 +19,9 @@ func PortScan(hostsList []string, ports string, timout int, threads int) []strin
 	//println(len(hostsList))
 	portsList := common.ParsePort(ports)
 	fmt.Println("[*] 端口测绘", portsList)
+	if common.Log {
+		log.Info(fmt.Sprintf("[*] 端口测绘: %s", portsList))
+	}
 	Addrs := make(chan Addr, len(hostsList)*len(portsList))
 	results := make(chan string, len(hostsList)*len(portsList))
 	var wg sync.WaitGroup
@@ -57,11 +60,17 @@ func PortConnect(addr Addr, results chan string, timout int, wg *sync.WaitGroup)
 	conn, err := common.WrapperTcpWithTimeout("tcp4", fmt.Sprintf("%s:%v", host, port), time.Duration(timout)*time.Second)
 	defer func() {
 		if conn != nil {
+			if common.Log {
+				log.Info(fmt.Sprintf("[-] %s:%d 连接失败", host, port))
+			}
 			conn.Close()
 		}
 	}()
 	if err == nil {
 		address := host + ":" + strconv.Itoa(port)
+		if common.Log {
+			log.Info(fmt.Sprintf("[+] %s:%d 连接成功", host, port))
+		}
 		result := fmt.Sprintf("%s open", address)
 		fmt.Printf(color.GreenString("[+] %s\n"), result)
 		wg.Add(1)
