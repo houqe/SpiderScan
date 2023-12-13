@@ -1,10 +1,12 @@
 package core
 
 import (
-	"EnScan/common"
+	"SpiderScan/common"
+	"SpiderScan/crack"
 	"fmt"
 	"github.com/fatih/color"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -59,10 +61,11 @@ func PortConnect(addr Addr, results chan string, timout int, wg *sync.WaitGroup)
 	host, port := addr.ip, addr.port
 	conn, err := common.WrapperTcpWithTimeout("tcp4", fmt.Sprintf("%s:%v", host, port), time.Duration(timout)*time.Second)
 	defer func() {
-		if conn != nil {
+		if err != nil {
 			if common.Log {
 				log.Info(fmt.Sprintf("[-] %s:%d 连接失败", host, port))
 			}
+		} else {
 			conn.Close()
 		}
 	}()
@@ -71,7 +74,22 @@ func PortConnect(addr Addr, results chan string, timout int, wg *sync.WaitGroup)
 		if common.Log {
 			log.Info(fmt.Sprintf("[+] %s:%d 连接成功", host, port))
 		}
-		result := fmt.Sprintf("%s open", address)
+		protocol := ""
+		if common.Service || common.Crack {
+			protocol = parseProtocol(conn, host, strconv.Itoa(port))
+			if common.Crack {
+				// 支持遍历字典的扫描类型
+				//protocols := []string{"ssh", "mysql", "redis", "telnet"}
+				protocols := []string{"ssh", "mysql"}
+				for _, proto := range protocols {
+					if strings.Contains(strings.ToLower(protocol), proto) {
+						crack.Run(host, strconv.Itoa(port), proto, timout, 5)
+						break
+					}
+				}
+			}
+		}
+		result := fmt.Sprintf("%s %s", address, protocol)
 		fmt.Printf(color.GreenString("[+] %s\n"), result)
 		wg.Add(1)
 		results <- result

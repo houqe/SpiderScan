@@ -1,8 +1,8 @@
 package main
 
 import (
-	"EnScan/common"
-	"EnScan/core"
+	"SpiderScan/common"
+	"SpiderScan/core"
 	"fmt"
 	"time"
 )

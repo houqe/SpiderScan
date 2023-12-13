@@ -1,7 +1,7 @@
 package core
 
 import (
-	"EnScan/common"
+	"SpiderScan/common"
 	"fmt"
 )
 
