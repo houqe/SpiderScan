@@ -30,8 +30,10 @@ type HostPort struct {
 type ConnetionFunc func(cancel context.CancelFunc, host, user, passwd string, newport, timeout int)
 
 var connectionFuncs = map[string]ConnetionFunc{
-	"ssh":   SSH,
-	"mysql": mySql,
+	"ssh":    SSH,
+	"mysql":  mySql,
+	"redis":  rediscon,
+	"telnet": telnetcon,
 }
 
 func Run(host, port, mode string, timeout, chanCount int) {

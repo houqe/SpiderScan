@@ -79,8 +79,7 @@ func PortConnect(addr Addr, results chan string, timout int, wg *sync.WaitGroup)
 			protocol = parseProtocol(conn, host, strconv.Itoa(port))
 			if common.Crack {
 				// 支持遍历字典的扫描类型
-				//protocols := []string{"ssh", "mysql", "redis", "telnet"}
-				protocols := []string{"ssh", "mysql"}
+				protocols := []string{"ssh", "mysql", "redis", "telnet"}
 				for _, proto := range protocols {
 					if strings.Contains(strings.ToLower(protocol), proto) {
 						crack.Run(host, strconv.Itoa(port), proto, timout, 5)
